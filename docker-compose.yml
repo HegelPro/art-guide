@@ -1,0 +1,9 @@
+version: '3.7'
+services:
+  art-guide:
+    container_name: art-guide
+    restart: always
+    build: .
+    env_file:
+      - .env.prod
+  

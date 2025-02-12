@@ -8,7 +8,8 @@
     "grammy": "^1.34.1"
   },
   "scripts": {
-    "start": "npm run build && node build/bot.js",
+    "build:start": "npm run build && npm run start",
+    "start": "node build/bot.js",
     "build": "tsc"
   }
 }

@@ -16,7 +16,7 @@ bot.command(startCommand.command, (ctx) =>
 );
 
 bot.command(artListCommand.command, (ctx) =>
-  ctx.reply(messages.commands.start.message, {
+  ctx.reply(messages.commands.artList.message, {
     reply_markup: new InlineKeyboard().switchInlineCurrent(
       messages.buttons.inlineShowArt
     ),
