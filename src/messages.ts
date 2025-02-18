@@ -7,7 +7,11 @@ export const messages = {
     artList: {
       description: 'Покзать список работ',
       message: `Посмотреть список работ можно ниже`
-    }
+    },
+    geo: {
+      description: 'Как добраться до искры?',
+      message: `Посмотреть список работ можно ниже`
+    },
   },
   buttons: {
     inlineShowArt: "Посмотреть работы художника"

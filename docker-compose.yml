@@ -5,5 +5,5 @@ services:
     restart: always
     build: .
     env_file:
-      - .env.prod
+      - .env.production
   

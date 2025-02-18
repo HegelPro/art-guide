@@ -2,7 +2,7 @@ import { Bot, InlineKeyboard } from "grammy";
 import * as path from "path";
 import { InlineQueryResult, InputFile } from "grammy/types";
 import "dotenv/config";
-import { artListCommand, arts, startCommand } from "./config";
+import { artListCommand, arts, geoCommand, startCommand } from "./config";
 import { messages } from "./messages";
 
 const bot = new Bot((globalThis as any).process.env.BOT_TOKEN);
@@ -23,7 +23,14 @@ bot.command(artListCommand.command, (ctx) =>
   })
 );
 
-bot.api.setMyCommands([startCommand, artListCommand]);
+bot.command(geoCommand.command, async (ctx) => {
+  await ctx.reply(
+    "Как пройти в искру можно узнать в посте:\nhttps://t.me/com_iskra/14"
+  );
+  await ctx.replyWithLocation(53.553667, 49.294907);
+});
+
+bot.api.setMyCommands([startCommand, artListCommand, geoCommand]);
 
 bot.on("message", (ctx) => {
   const art = arts.find((art) => art.name === ctx.message.text);
