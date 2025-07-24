@@ -84,24 +84,47 @@ async function startBot() {
   // inline_query
   bot.on("inline_query", async (ctx) => {
     const query = ctx.inlineQuery.query; // Текст, который ввел пользователь
+    if (!!1) {
+      const results: InlineQueryResult[] = state.arts
+        .filter((art) =>
+          art.name.toLocaleLowerCase().includes(query.toLocaleLowerCase())
+        )
+        .map((art) => ({
+          type: "article",
+          title: art.name,
+          thumbnail_url: art.photo,
+          description: art.description,
+          input_message_content: {
+            message_text: art.name,
+            payload: art.name,
+          },
+          id: art.name.toString(), // Уникальный ID для результата
+        }));
 
-    const results: InlineQueryResult[] = state.arts
-      .filter((art) => art.name.includes(query))
-      .map((art) => ({
-        type: "article",
-        title: art.name,
-        thumbnail_url: art.photo,
-        description: art.description,
-        input_message_content: {
-          message_text: art.name,
-          payload: art.name,
+      await ctx.answerInlineQuery(results, {
+        cache_time: 0, // Не кэшировать результаты
+      });
+    } else {
+      const results: InlineQueryResult[] = [
+        {
+          type: "location",
+          id: "1", // Уникальный ID результата
+          latitude: 53.553667,
+          longitude: 49.294907, // Долгота
+          title: "Искра*", // Название места
+          // horizontal_accuracy: 50, // Точность в метрах (опционально)
+          // live_period: 3600, // Время жизни локации (сек)
+          // reply_markup: new InlineKeyboard().text(
+          //   "Подробнее",
+          //   "location_info_1"
+          // ), // Кнопка
         },
-        id: art.name.toString(), // Уникальный ID для результата
-      }));
+      ];
 
-    await ctx.answerInlineQuery(results, {
-      cache_time: 0, // Не кэшировать результаты
-    });
+      await ctx.answerInlineQuery(results, {
+        cache_time: 0, // Не кэшировать результаты
+      });
+    }
   });
 
   bot.start();

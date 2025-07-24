@@ -1,0 +1,11 @@
+version: '3.7'
+services:
+  art-guide-storage:
+    container_name: art-guide-storage
+    restart: always
+    build: .
+    volumes:
+      - "./assets:/app/assets"
+    ports:
+      - 443:443
+  

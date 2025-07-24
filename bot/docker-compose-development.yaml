@@ -4,9 +4,9 @@ services:
   art-guide-dev:
     container_name: art-guide-dev
     restart: always
-    build: ./bot
+    build: .
     volumes:
-      - "./bot/src:/app/src"
+      - "./src:/app/src"
     env_file:
       - .env.development
   
