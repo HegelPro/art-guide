@@ -1,0 +1,19 @@
+version: '3.7'
+services:
+  art-guide:
+    container_name: art-guide
+    restart: always
+    build: ./bot
+    env_file:
+      - .env.production
+  art-guide-storage:
+    container_name: art-guide-storage
+    restart: always
+    build: ./storage
+    volumes:
+      - "./storage/assets:/app/assets"
+    env_file:
+      - .env.production
+    ports:
+      - 443:443
+  

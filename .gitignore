@@ -1,3 +1,6 @@
 .env*
-/build
-/node_modules
+/storage/certs
+/storage/assets
+/bot/google_file.json
+*/build
+*/node_modules

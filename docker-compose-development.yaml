@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+  art-guide-dev:
+    container_name: art-guide-dev
+    restart: always
+    build: ./bot
+    volumes:
+      - "./bot/src:/app/src"
+    env_file:
+      - .env.development
+  
