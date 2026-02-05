@@ -1,19 +1,19 @@
-import { CommandMiddleware } from "grammy";
+import { CallbackQueryMiddleware, CommandMiddleware } from "grammy";
 import { StateContext } from "../state/state";
 import { sheets_v4 } from "googleapis";
 import { appendAction } from "../table/appendAction";
 
-export const commandLogger =
+export const callbackQueryLogger =
   (
-    middleware: CommandMiddleware<StateContext>
-  ): CommandMiddleware<StateContext> =>
+    middleware: CallbackQueryMiddleware<StateContext>
+  ): CallbackQueryMiddleware<StateContext> =>
   async (ctx, next) => {
     // console.log(ctx.message?.text);
     appendAction(ctx.state.sheets, {
-      actionType: "command",
-      details: ctx.message?.text,
-      userId: ctx.from?.id,
-      userName: ctx.from?.username,
+      actionType: "callbackQuery",
+      details: ctx.callbackQuery.data,
+      userId: ctx.from.id,
+      userName: ctx.from.username,
       date: new Date().toISOString(),
     });
     // await ctx.state.sheets.spreadsheets.values.append({

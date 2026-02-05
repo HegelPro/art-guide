@@ -1,36 +1,34 @@
 import { sheets_v4 } from "googleapis";
 
-interface Art {
+interface Merch {
   name: string;
   voice?: string;
-  audio?: string;
   description?: string;
   shortDescription?: string;
   photo?: string;
   thumbnail?: string;
 }
 
-export type Arts = Art[];
+export type Merchs = Merch[];
 
-export const arts: Arts = [];
+export const merchs: Merchs = [];
 
-export async function initArts(sheets: sheets_v4.Sheets) {
+export async function initMerchs(sheets: sheets_v4.Sheets) {
   // callbackQuery
   const values = await sheets.spreadsheets.values.get({
     spreadsheetId: (globalThis as any).process.env.GOOGLE_SHEET_ID,
-    range: "arts",
+    range: "merchs",
   });
   values.data.values?.shift();
   values.data.values?.forEach((row) => {
-    arts.push({
+    merchs.push({
       name: row[0],
       description: row[1],
       shortDescription: row[2],
-      audio: row[3],
-      photo: row[4],
-      thumbnail: row[5],
+      photo: row[3],
+      thumbnail: row[4],
     });
   });
   // console.log(arts);
-  return arts;
+  return merchs;
 }

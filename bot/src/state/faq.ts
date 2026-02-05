@@ -5,5 +5,6 @@ export async function initFaqs(sheets: sheets_v4.Sheets) {
     spreadsheetId: (globalThis as any).process.env.GOOGLE_SHEET_ID,
     range: "faq",
   });
+  values.data.values?.shift();
   return values.data.values?.map((row) => row) || [];
 }
