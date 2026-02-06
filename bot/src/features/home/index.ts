@@ -1,11 +1,12 @@
-import { InputMediaBuilder } from "grammy";
+import { InlineKeyboard, InputMediaBuilder } from "grammy";
 import { callbackQueryLogger } from "../../utils/callbackQueryLogger";
-import { getToMainKeyboardMiddleware } from "../main";
+import { addToEditMainBtnToKeyboard } from "../main";
 
 export const homeCommand = "home";
 
 export const homeCallbackQuery = callbackQueryLogger(async (ctx) => {
-  const toMainKeybord = await getToMainKeyboardMiddleware(ctx);
+  const toMainKeybord = addToEditMainBtnToKeyboard(new InlineKeyboard(), ctx.state);
+
   await ctx.editMessageMedia(
     InputMediaBuilder.photo(ctx.getMessage("commands.home.url"), {
       parse_mode: "HTML",

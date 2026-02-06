@@ -1,6 +1,6 @@
 import { sheets_v4 } from "googleapis";
 
-interface Merch {
+interface IscraEvent {
   name: string;
   description?: string;
   shortDescription?: string;
@@ -8,19 +8,19 @@ interface Merch {
   thumbnail?: string;
 }
 
-export type Merchs = Merch[];
+export type IscraEvents = IscraEvent[];
 
-export const merchs: Merchs = [];
+export const events: IscraEvents = [];
 
-export async function initMerchs(sheets: sheets_v4.Sheets) {
+export async function initEvents(sheets: sheets_v4.Sheets) {
   // callbackQuery
   const values = await sheets.spreadsheets.values.get({
     spreadsheetId: (globalThis as any).process.env.GOOGLE_SHEET_ID,
-    range: "merchs",
+    range: "events",
   });
   values.data.values?.shift();
   values.data.values?.forEach((row) => {
-    merchs.push({
+    events.push({
       name: row[0],
       description: row[1],
       shortDescription: row[2],
@@ -29,5 +29,5 @@ export async function initMerchs(sheets: sheets_v4.Sheets) {
     });
   });
   // console.log(arts);
-  return merchs;
+  return events;
 }

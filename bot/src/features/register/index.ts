@@ -1,24 +1,16 @@
-import { BotCommand } from "grammy/types";
-import { getMessage } from "../../state/messages";
-import { commandLogger } from "../../utils/commandLogger";
-import { State } from "../../state/state";
-import { getToMainKeyboardMiddleware } from "../main";
+import { addToEditMainBtnToKeyboard } from "../main";
 import { callbackQueryLogger } from "../../utils/callbackQueryLogger";
-import { InputMediaBuilder } from "grammy";
+import { InlineKeyboard, InputMediaBuilder } from "grammy";
 
 export const registerCommand = "register";
-
-export const registerCommandMiddleware = commandLogger(async (ctx) => {
-  const keyboard = await getToMainKeyboardMiddleware(ctx);
-
-  await ctx.reply(getMessage(ctx.state)("commands.register.message"), {
-    // parse_mode: "HTML",
-    reply_markup: keyboard,
-  });
-});
+export const registerSearchKey = "regis";
 
 export const registerCallbackQuery = callbackQueryLogger(async (ctx) => {
-  const toMainKeybord = await getToMainKeyboardMiddleware(ctx);
+  const toMainKeybord = addToEditMainBtnToKeyboard(
+    new InlineKeyboard(),
+    ctx.state
+  );
+
   await ctx.editMessageMedia(
     InputMediaBuilder.photo(ctx.getMessage("commands.register.url"), {
       parse_mode: "HTML",
