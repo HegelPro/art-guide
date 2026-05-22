@@ -24,6 +24,7 @@ export interface StateContext extends Context {
 
   startRegistration?: (eventIndex: string, stages: RegistrationStage[]) => void;
   nextRegistration?: (registrationStageResult: RegistrationStageResult) => void;
+  
   endRegistration?: () => Record<string, string>;
   removeRegistration?: () => void;
 

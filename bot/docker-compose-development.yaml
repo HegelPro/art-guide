@@ -7,6 +7,7 @@ services:
     build: .
     volumes:
       - "./src:/app/src"
+      - "./build:/app/build"
     env_file:
       - .env.development
   

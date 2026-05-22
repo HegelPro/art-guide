@@ -3,4 +3,4 @@
 /storage/assets
 /bot/google_file.json
 */build
-*/node_modules
+node_modules
