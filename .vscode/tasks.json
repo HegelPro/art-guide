@@ -4,13 +4,25 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Restart Docker Container",
+      "label": "Start Bot",
       "type": "shell",
-      "command": "docker restart art-guide-dev",
+      "command": "npm",
+      "args": ["run", "start:bot"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
       "problemMatcher": [],
       "group": {
         "kind": "build",
         "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      },
+      "windows": {
+        "command": "npm.cmd"
       }
     }
   ]

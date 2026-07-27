@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "npm run build:bot && npm run build:storage",
+    "build:bot": "npm --prefix bot run build",
+    "build:storage": "npm --prefix storage run build",
+    "start:bot": "npm --prefix bot run start",
+    "start:storage": "npm --prefix storage run start",
+    "build:start:bot": "npm --prefix bot run build:start",
+    "build:start:storage": "npm --prefix storage run build:start"
+  }
+}
