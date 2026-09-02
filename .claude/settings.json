@@ -1,0 +1,19 @@
+{
+  "plansDirectory": "./.claude/plans",
+  "permissions": {
+    "deny": [
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Read(**/google_file.json)",
+      "Edit(**/.env)",
+      "Edit(**/.env.*)",
+      "Edit(**/google_file.json)",
+      "Write(**/.env)",
+      "Write(**/.env.*)",
+      "Write(**/google_file.json)",
+
+      "Read(**/build/**)",
+      "Read(**/package-lock.json)"
+    ]
+  }
+}
