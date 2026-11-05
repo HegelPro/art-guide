@@ -1,4 +1,5 @@
 .env*
+!.env.example
 /storage/certs
 /storage/assets
 /bot/google_file.json

@@ -15,6 +15,6 @@ const server = https.createServer(options, app);
 
 app.use("/static", express.static(path.join(__dirname, "../assets")));
 
-server.listen(port, async () => {
-  console.log(`Example app listening on port ${port}`);
+server.listen(port, () => {
+  console.log(`Storage server listening on port ${port}`);
 });

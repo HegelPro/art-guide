@@ -5,6 +5,7 @@ services:
     container_name: art-guide
     restart: always
     build: .
+    volumes:
+      - "./google_file.json:/app/google_file.json:ro"
     env_file:
       - .env.production
-  

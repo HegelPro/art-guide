@@ -8,6 +8,6 @@ services:
     volumes:
       - "./src:/app/src"
       - "./build:/app/build"
+      - "./google_file.json:/app/google_file.json:ro"
     env_file:
       - .env.development
-  

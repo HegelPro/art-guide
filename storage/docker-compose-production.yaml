@@ -6,6 +6,6 @@ services:
     build: .
     volumes:
       - "./assets:/app/assets"
+      - "./certs:/app/certs:ro"
     ports:
       - 443:443
-  
