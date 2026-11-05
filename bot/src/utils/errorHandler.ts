@@ -1,27 +1,22 @@
-import { ErrorHandler, GrammyError, HttpError } from "grammy";
+import { ErrorHandler } from "grammy";
 import { StateContext } from "../state/state";
-import { error } from "console";
+import { config } from "../config";
 
 export const botErrorHandler: ErrorHandler<StateContext> = async (err) => {
   const ctx = err.ctx;
   console.error(`Error while handling update ${ctx.update.update_id}:`);
 
   const e = err.error;
-  // if (e instanceof GrammyError) {
-  //   console.error("Error in request:", e.description);
-  // } else if (e instanceof HttpError) {
-  //   console.error("Could not contact Telegram:", e);
-  // } else
   if (e instanceof Error) {
     console.error("Error", e.message);
-    await ctx.state.sheets.spreadsheets.values.append({
-      spreadsheetId: (globalThis as any).process.env.GOOGLE_SHEET_ID,
+    await ctx.state?.sheets.spreadsheets.values.append({
+      spreadsheetId: config.googleSheetId,
       range: "errors",
       valueInputOption: "RAW",
       requestBody: {
         values: [[e.name, e.message, e.stack, new Date().toISOString()]],
       },
-    });
+    }).catch((logError: unknown) => console.error("Failed to log error:", logError));
   } else {
     console.error("Unknown error:", e);
   }

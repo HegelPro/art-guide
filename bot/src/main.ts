@@ -1,5 +1,3 @@
-import "dotenv/config";
-
 import { startCommand, startCommandMiddleware } from "./features/start";
 import { addStateMiddleware, reloadState, state } from "./state/state";
 import { botErrorHandler } from "./utils/errorHandler";
@@ -18,24 +16,27 @@ async function start() {
 
   bot.use(addStateMiddleware());
 
-  await setCallbackQueries(bot);
+  setCallbackQueries(bot);
 
   // commands
   bot.command(startCommand, startCommandMiddleware);
   bot.command(reloadCommand, reloadCommandMiddleware);
 
-  bot.api.setMyCommands([
+  await bot.api.setMyCommands([
     {
       command: startCommand,
       description: getMessage(state)("commands.start.description"),
     },
   ]);
 
-  await setMessageMiddleware(bot);
+  setMessageMiddleware(bot);
 
-  await setInlineQueryMiddleware(bot);
+  setInlineQueryMiddleware(bot);
 
-  bot.start();
+  await bot.start();
 }
 
-start();
+start().catch((error: unknown) => {
+  console.error("Failed to start bot:", error);
+  process.exitCode = 1;
+});

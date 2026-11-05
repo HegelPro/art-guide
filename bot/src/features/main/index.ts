@@ -92,14 +92,12 @@ export const addToPushMainBtnWithRemoveRegistrationToKeyboard = (
   state: State
 ): InlineKeyboard =>
   inlineKeyboard
-    .text('getMessage(state)("commands.main.description")', pushMainWithRemoveRegistrationCommand)
+    .text(getMessage(state)("commands.main.description"), pushMainWithRemoveRegistrationCommand)
     .row();
 
 export const pushMainWithRemoveRegistrationCallbackQuery = callbackQueryLogger(
   async (ctx) => {
     ctx.removeRegistration?.();
-
-    console.log(ctx.state.registrations);
 
     const mainKeybord = await getMainKeyboardMiddleware(ctx);
 

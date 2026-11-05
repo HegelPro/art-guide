@@ -95,7 +95,7 @@ export const startCommandMiddleware = commandLogger(async (ctx) => {
     const question = ctx.currentRegistrationStage?.()?.question;
 
     if (question) {
-      ctx.reply(question, {
+      await ctx.reply(question, {
         reply_markup: addToPushMainBtnWithRemoveRegistrationToKeyboard(
           new InlineKeyboard(),
           ctx.state

@@ -17,7 +17,7 @@ export interface RegistrationStateItem {
   stageId: number;
 }
 
-export let registrations: RegistrationStateItem[] = [];
+export const registrations: RegistrationStateItem[] = [];
 
 const getRegistration = (userId: number) => {
   return registrations.find((registration) => userId === registration.userId);
@@ -32,18 +32,10 @@ const nextRegistration = (
   userId: number,
   registrationStageResult: RegistrationStageResult
 ) => {
-  registrations = registrations.map((registrationStateItem) => {
-    return registrationStateItem.userId === userId
-      ? {
-          ...registrationStateItem,
-          stageResults: [
-            ...registrationStateItem.stageResults,
-            registrationStageResult,
-          ],
-          stageId: registrationStateItem.stageId + 1,
-        }
-      : registrationStateItem;
-  });
+  const registration = getRegistration(userId);
+  if (!registration) return;
+  registration.stageResults.push(registrationStageResult);
+  registration.stageId += 1;
 };
 
 const isEndOfRegistration = (userId: number) => {
@@ -52,9 +44,8 @@ const isEndOfRegistration = (userId: number) => {
 };
 
 const removeRegistration = (userId: number) => {
-  registrations = registrations.filter(
-    (registration) => registration.userId !== userId
-  );
+  const index = registrations.findIndex((registration) => registration.userId === userId);
+  if (index !== -1) registrations.splice(index, 1);
 };
 
 const startRegistration = (
@@ -62,6 +53,7 @@ const startRegistration = (
   eventName: string,
   stages: RegistrationStage[]
 ) => {
+  removeRegistration(userId);
   registrations.push({
     userId,
     eventName,

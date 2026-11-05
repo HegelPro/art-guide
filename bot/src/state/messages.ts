@@ -1,22 +1,19 @@
 import { sheets_v4 } from "googleapis";
 import { State } from "./state";
+import { config } from "../config";
 
 export type Messages = Record<string, string>;
 
 export async function initMessages(sheets: sheets_v4.Sheets) {
   const values = await sheets.spreadsheets.values.get({
-    spreadsheetId: (globalThis as any).process.env.GOOGLE_SHEET_ID,
+    spreadsheetId: config.googleSheetId,
     range: "messages",
-    // valueRenderOption: "UNFORMATTED_VALUE",
-    prettyPrint: true,
   });
 
   const messages: Messages = {};
 
-  values.data.values?.shift();
-  values.data.values?.forEach((row) => {
-    console.log(row);
-    messages[row[0]] = row[1];
+  (values.data.values ?? []).slice(1).forEach((row) => {
+    if (row[0]) messages[row[0]] = row[1] ?? "";
   });
 
   return messages;

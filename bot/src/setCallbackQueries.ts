@@ -15,7 +15,7 @@ import { scheduleCallbackQuery, scheduleCommand } from "./features/schedule";
 import { donateCallbackQuery, donateCommand } from "./features/donate";
 import { homeCallbackQuery, homeCommand } from "./features/home";
 
-export const setCallbackQueries = async (bot: Bot<StateContext>) => {
+export const setCallbackQueries = (bot: Bot<StateContext>): void => {
   bot.callbackQuery(
     pushMainWithRemoveRegistrationCommand,
     pushMainWithRemoveRegistrationCallbackQuery,

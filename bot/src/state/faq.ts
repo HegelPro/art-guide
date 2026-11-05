@@ -1,10 +1,10 @@
 import { sheets_v4 } from "googleapis";
+import { config } from "../config";
 
 export async function initFaqs(sheets: sheets_v4.Sheets) {
   const values = await sheets.spreadsheets.values.get({
-    spreadsheetId: (globalThis as any).process.env.GOOGLE_SHEET_ID,
+    spreadsheetId: config.googleSheetId,
     range: "faq",
   });
-  values.data.values?.shift();
-  return values.data.values?.map((row) => row) || [];
+  return (values.data.values ?? []).slice(1);
 }

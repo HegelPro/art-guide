@@ -24,7 +24,7 @@ export interface StateContext extends Context {
 
   startRegistration?: (eventIndex: string, stages: RegistrationStage[]) => void;
   nextRegistration?: (registrationStageResult: RegistrationStageResult) => void;
-  
+
   endRegistration?: () => Record<string, string>;
   removeRegistration?: () => void;
 
@@ -38,30 +38,32 @@ export const addStateMiddleware =
     ctx.state = state;
     ctx.getMessage = getMessage(state);
     const userId = ctx.from?.id;
-    if (userId) {
+    if (userId !== undefined) {
       ctx.startRegistration = (eventIndex, stages) =>
-        state.startRegistration(userId, eventIndex, stages);
+        ctx.state.startRegistration(userId, eventIndex, stages);
       ctx.nextRegistration = (registrationStageResult) =>
-        state.nextRegistration(userId, registrationStageResult);
-      ctx.endRegistration = () => state.endRegistration(userId);
-      ctx.removeRegistration = () => state.removeRegistration(userId);
+        ctx.state.nextRegistration(userId, registrationStageResult);
+      ctx.endRegistration = () => ctx.state.endRegistration(userId);
+      ctx.removeRegistration = () => ctx.state.removeRegistration(userId);
 
       ctx.currentRegistrationStage = () =>
-        state.getCurrentRegistrationStage(userId);
-      ctx.registration = () => state.getRegistration(userId);
-      ctx.isEndOfRegistration = () => state.isEndOfRegistration(userId);
+        ctx.state.getCurrentRegistrationStage(userId);
+      ctx.registration = () => ctx.state.getRegistration(userId);
+      ctx.isEndOfRegistration = () => ctx.state.isEndOfRegistration(userId);
     }
     await next();
   };
 
 export async function initState() {
   const sheets = await initSheets();
-  const messages = await initMessages(sheets);
-  const arts = await initArts(sheets);
-  const admins = await initAdmins(sheets);
-  const faqs = await initFaqs(sheets);
-  const merchs = await initMerchs(sheets);
-  const events = await initEvents(sheets);
+  const [messages, arts, admins, faqs, merchs, events] = await Promise.all([
+    initMessages(sheets),
+    initArts(sheets),
+    initAdmins(sheets),
+    initFaqs(sheets),
+    initMerchs(sheets),
+    initEvents(sheets),
+  ]);
   const {
     registrations,
     nextRegistration,
