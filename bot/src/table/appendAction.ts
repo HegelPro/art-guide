@@ -1,4 +1,5 @@
 import { sheets_v4 } from "googleapis";
+import { config } from "../config";
 
 export const appendAction = async (
   sheets: sheets_v4.Sheets,
@@ -17,18 +18,10 @@ export const appendAction = async (
   }
 ) =>
   await sheets.spreadsheets.values.append({
-    spreadsheetId: (globalThis as any).process.env.GOOGLE_SHEET_ID,
+    spreadsheetId: config.googleSheetId,
     range: "actions",
     valueInputOption: "RAW",
     requestBody: {
-      values: [
-        [
-          actionType,
-          details,
-          userId,
-          userName,
-          date,
-        ],
-      ],
+      values: [[actionType, details, userId, userName, date]],
     },
   });

@@ -1,4 +1,5 @@
 import { sheets_v4 } from "googleapis";
+import { config } from "../config";
 
 interface Admin {
   id: string;
@@ -6,20 +7,10 @@ interface Admin {
 
 export type Admins = Admin[];
 
-export const admins: Admins = [];
-
 export async function initAdmins(sheets: sheets_v4.Sheets) {
-  // callbackQuery
   const values = await sheets.spreadsheets.values.get({
-    spreadsheetId: (globalThis as any).process.env.GOOGLE_SHEET_ID,
+    spreadsheetId: config.googleSheetId,
     range: "admins",
   });
-  values.data.values?.shift();
-  values.data.values?.forEach((row) => {
-    admins.push({
-      id: row[0],
-    });
-  });
-  // console.log(admins);
-  return admins;
+  return (values.data.values ?? []).slice(1).map((row) => ({ id: row[0] }));
 }

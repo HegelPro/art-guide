@@ -15,6 +15,7 @@
   "scripts": {
     "build:start": "npm run build && npm run start",
     "start": "node build/main.js",
-    "build": "tsc"
+    "build": "tsc",
+    "check": "npm run build && node --test test/state-and-inline.test.cjs"
   }
 }

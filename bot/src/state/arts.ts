@@ -1,4 +1,5 @@
 import { sheets_v4 } from "googleapis";
+import { config } from "../config";
 
 interface Art {
   name: string;
@@ -12,25 +13,17 @@ interface Art {
 
 export type Arts = Art[];
 
-export const arts: Arts = [];
-
 export async function initArts(sheets: sheets_v4.Sheets) {
-  // callbackQuery
   const values = await sheets.spreadsheets.values.get({
-    spreadsheetId: (globalThis as any).process.env.GOOGLE_SHEET_ID,
+    spreadsheetId: config.googleSheetId,
     range: "arts",
   });
-  values.data.values?.shift();
-  values.data.values?.forEach((row) => {
-    arts.push({
+  return (values.data.values ?? []).slice(1).map((row) => ({
       name: row[0],
       description: row[1],
       shortDescription: row[2],
       audio: row[3],
       photo: row[4],
       thumbnail: row[5],
-    });
-  });
-  // console.log(arts);
-  return arts;
+    }));
 }

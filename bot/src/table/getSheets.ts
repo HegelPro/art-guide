@@ -6,6 +6,5 @@ const auth = new google.auth.GoogleAuth({
 });
 
 export const initSheets = async () => {
-  const client: any = await auth.getClient();
-  return google.sheets({ version: "v4", auth: client });
+  return google.sheets({ version: "v4", auth });
 };
